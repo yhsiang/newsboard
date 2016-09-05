@@ -1,0 +1,22 @@
+{
+  "name": "news-billboard",
+  "version": "1.0.0",
+  "description": "A news aggregator for listing by facebook engagements",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "babel-node src/server.js"
+  },
+  "author": "Yuan-Hsiang Cheng <lyforever62@hotmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "babel": "^6.5.2",
+    "babel-cli": "^6.14.0",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "bluebird": "^3.4.6",
+    "koa": "^1.2.2",
+    "rethinkdb": "^2.3.3",
+    "rss-parser": "^2.5.1"
+  }
+}

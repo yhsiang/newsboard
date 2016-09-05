@@ -1,5 +1,13 @@
 # News Billboard
 
+# TODO
+
+* facebook engaements
+* trigger flow
+* tests
+* log
+* simple page
+
 # Development
 
 ## Directory Structure

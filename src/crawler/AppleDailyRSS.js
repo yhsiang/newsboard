@@ -1,16 +1,31 @@
+import r from "rethinkdb";
+import { parseURL } from "./utils";
+import { options } from "../config/db";
 
-import r from 'rethinkdb';
-import { parseURL } from './utils';
+const baseURL = "http://www.appledaily.com.tw";
 
 const RSSURLS = [
-  'http://www.appledaily.com.tw/rss/newcreate/kind/rnews/type/new',
+  "/rss/newcreate/kind/rnews/type/new",
+  "/rss/newcreate/kind/rnews/type/recommend",
+  "/rss/newcreate/kind/rnews/type/hot",
+  "/rss/newcreate/kind/rnews/type/116",
+  "/rss/newcreate/kind/rnews/type/117",
+  "/rss/newcreate/kind/rnews/type/111",
+  "/rss/newcreate/kind/rnews/type/118",
+  "/rss/newcreate/kind/rnews/type/video",
+  "/rss/newcreate/kind/rnews/type/114",
+  "/rss/newcreate/kind/rnews/type/107",
+  "/rss/newcreate/kind/rnews/type/115",
+  "/rss/newcreate/kind/rnews/type/106",
+  "/rss/newcreate/kind/rnews/type/112",
+  "/rss/newcreate/kind/rnews/type/105",
+  "/rss/newcreate/kind/rnews/type/102",
+  "/rss/newcreate/kind/rnews/type/103",
+  "/rss/newcreate/kind/rnews/type/104",
+  "/rss/newcreate/kind/rnews/type/119",
+  "/rss/newcreate/kind/rnews/type/101",
+  "/rss/newcreate/kind/rnews/type/113",
 ];
-
-const dbOptions = {
-  host: 'localhost',
-  port: 28015,
-  db: 'newsboard',
-};
 
 /*
   @title: '水星持續逆行　唐立淇：做事無愧保持平常心',
@@ -36,7 +51,7 @@ export async function fetch() {
     return acc;
   }, []);
   console.log('Start to store all news');
-  const conn = await r.connect(dbOptions);
+  const conn = await r.connect(options);
   const result = await r.table('news').insert(news).run(conn);
   console.log('Store all news done');
   conn.close();

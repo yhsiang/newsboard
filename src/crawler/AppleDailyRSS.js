@@ -1,5 +1,5 @@
 import r from "rethinkdb";
-import { parseURL } from "./utils";
+import { parseURL } from "../helper/parser";
 import { options } from "../config/db";
 
 const baseURL = "http://www.appledaily.com.tw";

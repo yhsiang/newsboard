@@ -1,6 +1,6 @@
-import fb, { API } from "./helper/facebook";
 import r from "rethinkdb";
-import { options } from "./config/db";
+import fb, { API } from "../helper/facebook";
+import { options } from "../config/db";
 
 const LIMIT = 10;
 

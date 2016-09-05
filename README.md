@@ -23,7 +23,11 @@ src
 
 ## Flow
 
-news RSS fetcher -> faecbook Graph API -> Result
+news RSS crawler -> createJob
+
+worker -> processJob
+
+How to aggregate result?
 
 ## Schema
 

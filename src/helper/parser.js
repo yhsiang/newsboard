@@ -5,7 +5,11 @@ export function parseURL(url) {
   return new Promise((resolve, reject) => {
     parser.parseURL(url, (err, parsed) => {
       if (err) return reject(err);
-      return resolve(parsed);
+      const [from, category] = url.match(/.+\/(.+)$/);
+      return resolve({
+        category,
+        parsed,
+      });
     });
   });
 }

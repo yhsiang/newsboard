@@ -1,9 +1,9 @@
-import r from "rethinkdb";
 import { parseURL } from "../helper/parser";
-import { options } from "../config/db";
+import Queue from 'rethinkdb-job-queue';
+import { jobOptions } from '../config/db';
 
+const ORIGIN = 'appledaily';
 const baseURL = "http://www.appledaily.com.tw";
-
 const RSSURLS = [
   "/rss/newcreate/kind/rnews/type/new",
   "/rss/newcreate/kind/rnews/type/recommend",
@@ -26,35 +26,46 @@ const RSSURLS = [
   "/rss/newcreate/kind/rnews/type/101",
   "/rss/newcreate/kind/rnews/type/113",
 ];
-
+const q = new Queue(jobOptions);
 /*
-  @title: '水星持續逆行　唐立淇：做事無愧保持平常心',
-  @link: 'http://www.appledaily.com.tw/realtimenews/article/new/20160905/942357//',
-  @pubDate: 'Mon, 05 Sep 2016 00:00:00 +0800',
-  @content: '水星持續逆行　唐立淇：做事無愧保持平常心<br><a href="http://www.appledaily.com.tw/realtimenews/article/new/20160905/942357/">詳全文：水星持續逆行　唐立淇：做事無愧保持平常心</a>',
-  @contentSnippet: '水星持續逆行　唐立淇：做事無愧保持平常心詳全文：水星持續逆行　唐立淇：做事無愧保持平常心',
-  @guid: 'http://www.appledaily.com.tw/realtimenews/article/new/20160905/942357//'
-  @category: new
-  @origin: appledaily
+  @title:          String,
+  @link:           String,
+  @pubDate:        String, // 'EEE,DD MMM YYYY hh:mm:sss+Z',
+  @content:        String, (Escape Html),
+  @contentSnippet: String,
+  @guid:           String,
+  @category:       String, // new
+  @origin:         String, // appledaily
 */
 
-export async function fetch() {
-  console.log('Start to fetch all RSS');
-  const parsedRSS = await Promise.all(RSSURLS.map(parseURL));
-  console.log('Fetch all RSS done');
-  const news = parsedRSS.reduce((acc, cur) => {
-    acc = acc.concat(cur.feed.entries.map(it => ({
-      category: 'new',
-      origin: 'appledaily',
-      ...it,
-    })));
-    return acc;
-  }, []);
-  console.log('Start to store all news');
-  const conn = await r.connect(options);
-  const result = await r.table('news').insert(news).run(conn);
-  console.log('Store all news done');
-  conn.close();
+export async function createJob() {
+  // Start fetch RSS
+  const urls = RSSURLS.map(it => (`${baseURL}${it}`));
+  const parsedRSS = await Promise.all(urls.map(parseURL));
+  const news = [];
+  // End fetch RSS
+
+  parsedRSS.map(({ category, parsed }) =>
+    parsed.feed.entries.map(({ link, guid, ...rest } )=>
+      news.push({
+        category,
+        origin: ORIGIN,
+        link: link.replace(/\/$/, ""),
+        guid: guid.replace(/\/$/, ""),
+        ...rest
+      })
+    )
+  );
+
+  // Start create Job
+  const jobs = q.createJob(news.length);
+  jobs.map((it, idx) => {
+    it.data = news[idx];
+    return it;
+  });
+  const savedJobs = await q.addJob(jobs);
+  q.stop();
+  // End create Job
 }
 
-fetch();
+createJob();

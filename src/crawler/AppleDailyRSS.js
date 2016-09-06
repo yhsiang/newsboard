@@ -42,19 +42,23 @@ export async function createJob() {
   // Start fetch RSS
   const urls = RSSURLS.map(it => (`${baseURL}${it}`));
   const parsedRSS = await Promise.all(urls.map(parseURL));
+  const uniqueLinks = [];
   const news = [];
   // End fetch RSS
 
   parsedRSS.map(({ category, parsed }) =>
-    parsed.feed.entries.map(({ link, guid, ...rest } )=>
+    parsed.feed.entries.map(({ link, guid, ...rest }) => {
+      const fmtLink = link.replace(/\/$/, "");
+      if (uniqueLinks.indexOf(fmtLink) > -1) return;
+      uniqueLinks.push(fmtLink);
       news.push({
         category,
         origin: ORIGIN,
-        link: link.replace(/\/$/, ""),
+        link: fmtLink,
         guid: guid.replace(/\/$/, ""),
         ...rest
       })
-    )
+    })
   );
 
   // Start create Job

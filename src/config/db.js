@@ -1,7 +1,7 @@
 export const dbOptions = {
   host: 'localhost',
   port: 28015,
-  db: 'newsboard',
+  db: 'Board',
 };
 
 export const jobOptions = {

@@ -10,7 +10,7 @@ const fbOptions = {
 const fb = new Facebook(fbOptions);
 
 export function API(url, options) {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     if (options) {
       return fb.api(url, options, res => resolve(res.access_token));
     }

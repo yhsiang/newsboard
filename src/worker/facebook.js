@@ -1,8 +1,9 @@
 import fb, { API } from "../helper/facebook";
 import r from "rethinkdb";
-import Queue from 'rethinkdb-job-queue';
-import { dbOptions, jobOptions } from '../config/db';
+import Queue from "rethinkdb-job-queue";
+import { dbOptions, jobOptions } from "../config/db";
 
+const tableName = "Graph";
 const LIMIT = 10;
 const authOptions ={
   client_id: process.env.AppId,
@@ -11,24 +12,8 @@ const authOptions ={
 };
 const q = new Queue(jobOptions);
 
-/*
-{
-  og_object {
-    id
-    description
-    title
-    type
-    updated_time
-  }
-  share {
-    comment_count
-    share_count
-  }
-  id
-}
-*/
-
 q.on('completed', jobId => console.log(`${new Date()} Job completed: ${jobId}`));
+q.on('failed', jobId => console.log(`${new Date()} Job Failed: ${jobId}`));
 
 async function processJob() {
   const conn = await r.connect(dbOptions);
@@ -38,11 +23,23 @@ async function processJob() {
 
   q.process(async (job, next) => {
     const graph = await API(job.data.link);
-    if (graph.error) {
-      throw Error('Exception');
+    if (graph.share) {
+      const { id, share, og_object } = graph;
+      const { id: ogId, ...rest } = og_object;
+      const result = await r
+        .table(tableName)
+        .insert({
+          link: id,
+          ogId,
+          ...rest,
+          ...share,
+        })
+        .run(conn);
+      setTimeout(() => next('Insert to db'), 1000);
+    } else {
+      const err = new Error('No Graph Data');
+      next(err);
     }
-    const result = await r.table('graphs').insert(graph).run(conn);
-    setTimeout(() => next() , 1000);
   });
 }
 

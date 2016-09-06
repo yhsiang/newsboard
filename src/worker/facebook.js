@@ -28,7 +28,7 @@ const q = new Queue(jobOptions);
 }
 */
 
-q.on('completed', jobId => console.log(`Job completed: ${jobId}`));
+q.on('completed', jobId => console.log(`${new Date()} Job completed: ${jobId}`));
 
 async function processJob() {
   const conn = await r.connect(dbOptions);
@@ -37,13 +37,12 @@ async function processJob() {
   console.log('Auth done!');
 
   q.process(async (job, next) => {
-    try {
-      const graph = await API(job.data.link);
-      const result = await r.table('graphs').insert(graph).run(conn);
-      setTimeout(() => next() , 2000);
-    } catch (e) {
-      console.log(e);
+    const graph = await API(job.data.link);
+    if (graph.error) {
+      throw Error('Exception');
     }
+    const result = await r.table('graphs').insert(graph).run(conn);
+    setTimeout(() => next() , 1000);
   });
 }
 

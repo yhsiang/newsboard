@@ -56,18 +56,14 @@ How to aggregate result?
 
 ```
 {
-  og_object {
-    id
-    description
-    title
-    type
-    updated_time
-  }
-  share {
-    comment_count
-    share_count
-  }
-  id
+  ogId
+  description
+  title
+  type
+  updated_time
+  comment_count
+  share_count
+  link
 }
 ```
 

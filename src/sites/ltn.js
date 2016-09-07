@@ -1,3 +1,4 @@
+// http://news.ltn.com.tw/service?p=8
 export const baseURL = "http://news.ltn.com.tw";
 export const URLs = [
   "/rss/focus.xml",

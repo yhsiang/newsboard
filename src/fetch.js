@@ -5,6 +5,10 @@ import * as ltn from "./sites/ltn";
 import * as chinatimes from "./sites/chinatimes";
 import * as ettoday from "./sites/ettoday";
 import * as setn from "./crawler/setn";
+import * as peoplenews from "./sites/peoplenews";
+import * as storm from "./sites/storm";
+import * as theinitium from "./sites/theinitium";
+import * as cna from "./sites/cna";
 
 execute(apple);
 execute(udn);
@@ -12,3 +16,7 @@ execute(ltn);
 execute(chinatimes);
 execute(ettoday);
 setn.execute();
+execute(peoplenews);
+execute(storm);
+execute(theinitium);
+execute(cna);

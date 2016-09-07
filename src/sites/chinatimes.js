@@ -1,3 +1,4 @@
+// http://www.chinatimes.com/syndication/rss
 export const baseURL = "http://www.chinatimes.com";
 export const URLs = [
   "/rss/realtimenews.xml",

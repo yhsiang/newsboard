@@ -1,3 +1,4 @@
+// http://udn.com/rss/
 export const baseURL = "http://udn.com";
 export const URLs = [
   "/rssfeed/news/1",

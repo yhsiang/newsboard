@@ -19,4 +19,4 @@ setn.execute();
 execute(peoplenews);
 execute(storm);
 execute(theinitium);
-execute(cna);
+// execute(cna);

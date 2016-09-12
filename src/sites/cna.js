@@ -15,4 +15,4 @@ export const URLs = [
   "/rsscna/TopNewsforWeek",
   "/rsscna/video",
 ];
-export const origin = "theinitium";
+export const origin = "cna";

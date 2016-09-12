@@ -18,7 +18,10 @@ export async function aggregate({ baseURL, URLs, origin }) {
 
   parsedRSS.map(rss =>
     rss.feed.entries.map(({ link, ...rest }) => {
-      const fmtLink = link.replace(/\/$/, "");
+      let fmtLink = link.replace(/\/$/, "");
+      if (origin === 'ettoday' || origin === 'theinitium') {
+        fmtLink = rest.guid.replace(/\/$/, "");
+      }
       if (uniqueLinks.indexOf(fmtLink) > -1) return;
       uniqueLinks.push(fmtLink);
       news.push({

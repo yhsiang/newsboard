@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "babel-node src/server.js",
-    "build": "babel src -d dist"
+    "prebuild": "rm -rf dist",
+    "build": "babel src -d dist",
+    "postinstall": "npm run build"
   },
   "author": "Yuan-Hsiang Cheng <lyforever62@hotmail.com>",
   "license": "MIT",

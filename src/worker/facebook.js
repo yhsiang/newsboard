@@ -43,6 +43,7 @@ r.connect(dbOptions)
             id,
             ogId: og_object.id,
             title: job.data.title,
+            date: job.data.date,
             ...share,
           }, { conflict: "update" })
           .run(connection);

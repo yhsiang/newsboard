@@ -71,6 +71,6 @@ r.connect(dbOptions)
     .run(connection);
  })
  .then(result => {
-   console.log(result.inserted);
+   console.log(`== Last time: ${new Date()}, update ${result.inserted} records.`);
    connection.close();
  });

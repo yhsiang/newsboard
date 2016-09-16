@@ -12,4 +12,7 @@ r.connect(dbOptions)
  })
 .then(cur => cur.toArray())
 .then(results => createJob(results))
-.then(() => connection.close());
+.then(() => {
+  console.log(`== Last time: ${new Date()}, schedule done`);
+  connection.close()
+});

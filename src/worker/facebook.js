@@ -13,9 +13,10 @@ const authOptions ={
 const q = new Queue(jobOptions);
 var connection;
 
-q.on('completed', jobId => console.log(`${new Date()} Job completed: ${jobId}`));
-q.on('failed', jobId => console.log(`${new Date()} Job Failed: ${jobId}`));
-q.on('idle', () => connection.close());
+q.on('idle', () => {
+  console.log(`== Last time: ${new Date()}, fetch facebook graph data done`);
+  connection.close();
+});
 
 r.connect(dbOptions)
  .then(conn => API('oauth/access_token', authOptions))
@@ -40,7 +41,7 @@ r.connect(dbOptions)
             ogId,
             ...rest,
             ...share,
-          })
+          }, { conflict: "update" })
           .run(connection);
      })
      .then(() => setTimeout(() => next('Insert to db'), 1000));

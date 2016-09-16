@@ -37,13 +37,12 @@ r.connect(dbOptions)
            return next(new Error('No Graph Data'));
          }
          const { id, share, og_object } = graph;
-         const { id: ogId, ...rest } = og_object;
          return r
           .table(tableName)
           .insert({
             id,
-            ogId,
-            ...rest,
+            ogId: og_object.id,
+            title: job.data.title,
             ...share,
           }, { conflict: "update" })
           .run(connection);

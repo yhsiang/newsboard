@@ -1,8 +1,6 @@
 import { createJob } from "../job";
 import r from "rethinkdb";
-import { dbOptions } from "../config/db";
-
-export const tableName = "News";
+import { dbOptions, tableName } from "../config/db";
 
 var connection;
 r.connect(dbOptions)

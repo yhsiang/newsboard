@@ -9,3 +9,5 @@ export const jobOptions = {
   name: 'News',
   retryDelay: 1000,
 };
+
+export const tableName = "News";

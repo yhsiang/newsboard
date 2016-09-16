@@ -2,8 +2,7 @@ import FeedParser from "feedparser";
 import request from "request";
 import Promise from "bluebird";
 import r from "rethinkdb";
-import { dbOptions } from "../config/db";
-import { tableName } from "../worker/scheduler";
+import { dbOptions, tableName } from "../config/db";
 
 function fetch(url) {
   const req = request(url);

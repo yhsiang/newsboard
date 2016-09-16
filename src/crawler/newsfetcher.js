@@ -63,7 +63,6 @@ const urls = [
   "http://feeds.feedburner.com/rsscna/sport",
   "http://feeds.feedburner.com/rsscna/local",
   "http://feeds.feedburner.com/rsscna/TopNewsforWeek",
-  "http://feeds.feedburner.com/rsscna/video",
   "http://news.ltn.com.tw/rss/focus.xml",
   "http://news.ltn.com.tw/rss/politics.xml",
   "http://news.ltn.com.tw/rss/society.xml",

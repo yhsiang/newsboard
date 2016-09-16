@@ -11,6 +11,20 @@
 * log
 * simple page
 
+# News
+  hourly fetch
+ * http://www.appledaily.com.tw/rss/newcreate/kind/rnews/type/new
+ * http://www.chinatimes.com/rss/realtimenews.xml
+ * http://feeds.feedburner.com/ettoday/realtime
+ * http://www.peoplenews.tw/rss/%E7%B8%BD%E8%A6%BD
+ * http://www.storm.mg/feeds/all
+ * http://feeds.initium.news/theinitium
+ * http://udn.com/rssfeed/news/1
+
+ * cna: all RSS
+ * ltn: all RSS
+
+
 # Development
 
 ## Directory Structure

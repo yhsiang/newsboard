@@ -14,17 +14,21 @@ const q = new Queue(jobOptions);
 var connection;
 
 q.on('idle', () => {
-  console.log(`== Last time: ${new Date()}, fetch facebook graph data done`);
+  console.log(`== Last time: ${new Date()}, end fetching facebook data done`);
   connection.close();
+  q.stop();
 });
 
+console.log(`== Last time: ${new Date()}, start fetching facebook data done`);
 r.connect(dbOptions)
- .then(conn => API('oauth/access_token', authOptions))
+ .then(conn => {
+   connection = conn;
+   return API('oauth/access_token', authOptions);
+ })
  .then(token => {
    fb.setAccessToken(token);
-   console.log('Auth done!');
    q.process((job, next) => {
-     API(job.data.link)
+     API(job.data.id)
        .then(graph => {
          if (graph.error) {
            return next(new Error(graph.error.message));

@@ -9,7 +9,6 @@ r.connect(dbOptions)
    return r
     .table(tableName)
     .filter(news => news("date").gt(r.now().date().sub(216000)))
-    .filter(news => news("date").lt(r.now().date().sub(36000)))
     .run(conn);
  })
 .then(cur => cur.toArray())

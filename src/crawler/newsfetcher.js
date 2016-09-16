@@ -67,7 +67,7 @@ r.connect(dbOptions)
    }, [])
    return r
     .table(tableName)
-    .insert(allNews, { upsert: true })
+    .insert(allNews, { conflict: "update" })
     .run(connection);
  })
  .then(result => {

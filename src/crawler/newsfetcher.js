@@ -3,8 +3,7 @@ import request from "request";
 import Promise from "bluebird";
 import r from "rethinkdb";
 import { dbOptions } from "../config/db";
-
-const tableName = 'News';
+import { tableName } from "../worker/scheduler";
 
 function fetch(url) {
   const req = request(url);

@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
    })
    .then(results => {
      res.render("index.ejs", {
-       title: `${moment().format("MM-DD")} 排行`,
+       title: `${moment().format("MM/DD/YYYY")} 熱門新聞整理`,
        shares: results,
        comments,
        moment,

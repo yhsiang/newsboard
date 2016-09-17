@@ -3,6 +3,7 @@ import r from "rethinkdb";
 import { dbOptions, tableName } from "../config/db";
 
 var connection;
+var length;
 r.connect(dbOptions)
  .then(conn => {
    connection = conn;
@@ -12,8 +13,11 @@ r.connect(dbOptions)
     .run(conn);
  })
 .then(cur => cur.toArray())
-.then(results => createJob(results))
+.then(results => {
+  length = results.length;
+  createJob(results)
+})
 .then(() => {
-  console.log(`== Last time: ${new Date()}, schedule done`);
+  console.log(`== Last time: ${new Date()}, schedule ${length} records.`);
   connection.close()
 });

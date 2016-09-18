@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin</title>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
+  <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+  <div>
+    <a href="/">24 小時</a>
+    <a href="/48">48 小時</a>
+    <a href="/admin">全部資料</a>
+  </div>
+  <table id="data">
+    <thead>
+      <tr>
+        <th>標題</th>
+        <th>總互動數</th>
+        <th>留言數</th>
+        <th>時間</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% data.forEach(function(it) { %>
+      <tr>
+        <td>
+          <a href="<%= it.id%>" target="_blank">
+            <%= it.title%>
+          </a>
+        </td>
+        <td class="share"><%= it.share_count%></td>
+        <td class="share"><%= it.comment_count%></td>
+        <td><%= moment(it.date).format("MM-DD hh:mm")%></td>
+      </tr>
+    <% }); %>
+    </tbody>
+  </table>
+  <script>
+    $(function() {
+      $('#data').DataTable({
+        iDisplayLength: 50
+      });
+    });
+  </script>
+</body>
+</html>

@@ -4,6 +4,7 @@ import { dbOptions } from "./config/db";
 import moment from "moment";
 
 const PORT = process.env.PORT || 5240;
+const day = 86400;
 const app = express();
 app.set('view engine', 'ejs');
 
@@ -14,7 +15,7 @@ app.get('/', (req, res) => {
      connection = conn;
      return r
       .table("Graph")
-      .filter(news => news("date").gt(r.now().date().sub(86400)))
+      .filter(news => news("date").gt(r.now().date().sub(day)))
       .orderBy(r.desc("comment_count"))
       .limit(10)
       .run(connection);
@@ -23,7 +24,7 @@ app.get('/', (req, res) => {
      comments = results;
      return r
       .table("Graph")
-      .filter(news => news("date").gt(r.now().date().sub(86400)))
+      .filter(news => news("date").gt(r.now().date().sub(day)))
       .orderBy(r.desc("share_count"))
       .limit(10)
       .run(connection);
@@ -45,7 +46,7 @@ app.get('/48', (req, res) => {
      connection = conn;
      return r
       .table("Graph")
-      .filter(news => news("date").gt(r.now().date().sub(2*86400)))
+      .filter(news => news("date").gt(r.now().date().sub(2*day)))
       .orderBy(r.desc("comment_count"))
       .limit(10)
       .run(connection);
@@ -54,7 +55,7 @@ app.get('/48', (req, res) => {
      comments = results;
      return r
       .table("Graph")
-      .filter(news => news("date").gt(r.now().date().sub(2*86400)))
+      .filter(news => news("date").gt(r.now().date().sub(2*day)))
       .orderBy(r.desc("share_count"))
       .limit(10)
       .run(connection);
@@ -76,6 +77,7 @@ app.get('/admin', (req, res) => {
      connection = conn;
      return r
       .table("Graph")
+      .filter(news => news("date").gt(r.now().date().sub(5*day)))
       .run(connection);
    })
    .then(cur => cur.toArray())

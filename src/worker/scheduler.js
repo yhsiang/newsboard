@@ -2,6 +2,8 @@ import { createJob } from "../job";
 import r from "rethinkdb";
 import { dbOptions, tableName } from "../config/db";
 
+const fbLimit = 50;
+
 var connection;
 var length;
 r.connect(dbOptions)
@@ -9,13 +11,27 @@ r.connect(dbOptions)
    connection = conn;
    return r
     .table(tableName)
-    .filter(news => news("date").gt(r.now().date().sub(216000)))
+    .orderBy(r.desc("date"))
+    .limit(30000)
     .run(conn);
  })
 .then(cur => cur.toArray())
 .then(results => {
-  length = results.length;
-  createJob(results)
+  const reduced =
+    results
+      .reduce((acc, cur, idx) => {
+        const index = parseInt(idx / 50, 10);
+        if (!acc[index]) acc[index] = { ids: "", news: {} };
+        acc[index]["ids"] += `${cur.id},`;
+        acc[index][cur.id] = cur;
+        return acc;
+      }, [])
+      .map(it => {
+        it.ids = it.ids.replace(/,$/, "");
+        return it;
+      })
+  length = reduced.length;
+  createJob(reduced);
 })
 .then(() => {
   console.log(`== Last time: ${new Date()}, schedule ${length} records.`);

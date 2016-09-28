@@ -10,7 +10,7 @@ const authOptions ={
   client_secret: process.env.AppSecret,
   grant_type: 'client_credentials',
 };
-const q = new Queue(jobOptions);
+const q = new Queue(Object.assign({ name: 'Facebook'}, jobOptions));
 var connection;
 
 q.on('idle', () => {

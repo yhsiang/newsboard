@@ -1,4 +1,4 @@
-import { createJob } from "../job";
+import { createJob } from "../jobs/facebook";
 import r from "rethinkdb";
 import { dbOptions, tableName } from "../config/db";
 

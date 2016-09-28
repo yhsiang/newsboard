@@ -1,6 +1,6 @@
 import Queue from 'rethinkdb-job-queue';
-import { jobOptions } from './config/db';
-const q = new Queue(jobOptions);
+import { jobOptions } from '../config/db';
+const q = new Queue(Object.assign({ name: 'Facebook'}, jobOptions));
 
 export function createJob(news) {
   q.reset()

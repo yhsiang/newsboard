@@ -6,7 +6,6 @@ export const dbOptions = {
 
 export const jobOptions = {
   db: 'JobQueue',
-  name: 'News',
   retryDelay: 1000,
 };
 

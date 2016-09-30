@@ -2,8 +2,6 @@ import { createJob } from "../jobs/news";
 import r from "rethinkdb";
 import { dbOptions, tableName } from "../config/db";
 
-const fbLimit = 50;
-
 var connection;
 var length;
 r.connect(dbOptions)
@@ -11,6 +9,9 @@ r.connect(dbOptions)
    connection = conn;
    return r
     .table(tableName)
+    .filter(
+      r.row.hasFields("category").not()
+    )
     .run(conn);
  })
 .then(cur => cur.toArray())

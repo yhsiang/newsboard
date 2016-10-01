@@ -86,6 +86,7 @@
       <thead>
         <tr>
           <th>留言數</th>
+          <th>分類</th>
           <th>標題</th>
           <th>時間</th>
         </tr>
@@ -94,6 +95,7 @@
       <% otherExcludeEntComments.forEach(function(comment) { %>
         <tr>
           <td class="share"><%= comment.comment_count%></td>
+          <td><%= comment.category.join(',')%></td>
           <td>
             <a href="<%= comment.id%>" target="_blank">
               <%= comment.title%>
@@ -111,6 +113,7 @@
       <thead>
         <tr>
           <th>總互動數</th>
+          <th>分類</th>
           <th>標題</th>
           <th>時間</th>
         </tr>
@@ -119,6 +122,7 @@
       <% otherExcludeEntShares.forEach(function(share) { %>
         <tr>
           <td class="share"><%= share.share_count%></td>
+          <td><%= share.category.join(',')%></td>
           <td>
             <a href="<%= share.id%>" target="_blank">
               <%= share.title%>

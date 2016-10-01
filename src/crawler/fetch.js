@@ -62,7 +62,6 @@ export function fetch(url) {
         decodeEntities: false
       });
       return {
-        rawHtml,
         category: parseCategory($)(parseType(url)),
       };
     });

@@ -23,12 +23,7 @@ r.connect(dbOptions)
         const index = parseInt(idx / 50, 10);
         if (!acc[index]) acc[index] = { ids: "", news: {} };
         acc[index]["ids"] += `${cur.id},`;
-        acc[index][cur.id] = {
-          title: cur.title,
-          id: cur.id,
-          date: cur.date,
-          category: cur.category,
-        };
+        acc[index][cur.id] = cur;
         return acc;
       }, [])
       .map(it => {

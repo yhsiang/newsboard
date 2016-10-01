@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
       .filter(
         r.and(
           r.row("date").gt(r.now().date().sub(day)),
-          r.row("category").contains("東推西推", "即時新聞", "娛樂").not()
+          r.row("category").contains("東推西推", "即時新聞", "娛樂", "政治").not()
         )
       )
       .orderBy(r.desc("comment_count"))
@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
       .filter(
         r.and(
           r.row("date").gt(r.now().date().sub(day)),
-          r.row("category").contains("東推西推", "即時新聞", "娛樂").not()
+          r.row("category").contains("東推西推", "即時新聞", "娛樂", "政治").not()
         )
       )
       .orderBy(r.desc("share_count"))
@@ -89,7 +89,7 @@ app.get('/48', (req, res) => {
       .filter(
         r.and(
           r.row("date").gt(r.now().date().sub(2*day)),
-          r.row("category").contains("東推西推", "即時新聞", "娛樂").not()
+          r.row("category").contains("東推西推", "即時新聞", "娛樂", "政治").not()
         )
       )
       .orderBy(r.desc("comment_count"))
@@ -103,7 +103,7 @@ app.get('/48', (req, res) => {
       .filter(
         r.and(
           r.row("date").gt(r.now().date().sub(2*day)),
-          r.row("category").contains("東推西推", "即時新聞", "娛樂").not()
+          r.row("category").contains("東推西推", "即時新聞", "娛樂", "政治").not()
         )
       )
       .orderBy(r.desc("share_count"))

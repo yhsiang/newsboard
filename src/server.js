@@ -152,6 +152,8 @@ app.get('/48', (req, res) => {
        title: `${moment().format("MM/DD/YYYY")} 48 小時內熱門新聞整理`,
        shares: results,
        comments,
+       otherExcludeEntShares,
+       otherExcludeEntComments,
        moment,
      });
    })

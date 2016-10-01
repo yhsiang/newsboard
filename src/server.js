@@ -8,6 +8,8 @@ const day = 86400;
 const app = express();
 app.set('view engine', 'ejs');
 
+const filters = ["東推西推", "即時新聞", "娛樂", "政治", "娛樂星光雲"];
+
 app.get('/', (req, res) => {
   var connection, otherExcludeEntComments, otherExcludeEntShares, comments;
   r.connect(dbOptions)
@@ -18,7 +20,7 @@ app.get('/', (req, res) => {
       .filter(
         r.and(
           r.row("date").gt(r.now().date().sub(day)),
-          r.row("category").contains("東推西推", "即時新聞", "娛樂", "政治").not()
+          r.row("category").contains(filters).not()
         )
       )
       .orderBy(r.desc("comment_count"))
@@ -32,7 +34,7 @@ app.get('/', (req, res) => {
       .filter(
         r.and(
           r.row("date").gt(r.now().date().sub(day)),
-          r.row("category").contains("東推西推", "即時新聞", "娛樂", "政治").not()
+          r.row("category").contains(filters).not()
         )
       )
       .orderBy(r.desc("share_count"))
@@ -89,7 +91,7 @@ app.get('/48', (req, res) => {
       .filter(
         r.and(
           r.row("date").gt(r.now().date().sub(2*day)),
-          r.row("category").contains("東推西推", "即時新聞", "娛樂", "政治").not()
+          r.row("category").contains(filters).not()
         )
       )
       .orderBy(r.desc("comment_count"))
@@ -103,7 +105,7 @@ app.get('/48', (req, res) => {
       .filter(
         r.and(
           r.row("date").gt(r.now().date().sub(2*day)),
-          r.row("category").contains("東推西推", "即時新聞", "娛樂", "政治").not()
+          r.row("category").contains(filters).not()
         )
       )
       .orderBy(r.desc("share_count"))

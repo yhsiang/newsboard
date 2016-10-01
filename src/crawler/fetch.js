@@ -21,6 +21,7 @@ function parseCategory($) {
         let category = $('.menu_bread_crumb em').last().text()
         if (!category) category = $('.main_logo').text()
         if (!category) category = $('.logo_sport').text()
+        if (!category) category = $('meta[name="section"]').attr('content')
         return [category]
       }
       case "ltn": {

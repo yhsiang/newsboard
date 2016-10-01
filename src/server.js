@@ -9,13 +9,46 @@ const app = express();
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
-  var connection, comments;
+  var connection, otherExcludeEntComments, otherExcludeEntShares, comments;
   r.connect(dbOptions)
    .then(conn => {
      connection = conn;
      return r
       .table("Graph")
-      .filter(news => news("date").gt(r.now().date().sub(day)))
+      .filter(
+        r.and(
+          r.row("date").gt(r.now().date().sub(day)),
+          r.row("category").contains("東推西推", "即時新聞", "娛樂").not()
+        )
+      )
+      .orderBy(r.desc("comment_count"))
+      .limit(10)
+      .run(connection);
+   })
+   .then(results => {
+     otherExcludeEntComments = results;
+     return r
+      .table("Graph")
+      .filter(
+        r.and(
+          r.row("date").gt(r.now().date().sub(day)),
+          r.row("category").contains("東推西推", "即時新聞", "娛樂").not()
+        )
+      )
+      .orderBy(r.desc("share_count"))
+      .limit(10)
+      .run(connection);
+   })
+   .then(results => {
+     otherExcludeEntShares = results;
+     return r
+      .table("Graph")
+      .filter(
+        r.and(
+          r.row("date").gt(r.now().date().sub(day)),
+          r.row("category").contains("政治")
+        )
+      )
       .orderBy(r.desc("comment_count"))
       .limit(10)
       .run(connection);
@@ -24,7 +57,12 @@ app.get('/', (req, res) => {
      comments = results;
      return r
       .table("Graph")
-      .filter(news => news("date").gt(r.now().date().sub(day)))
+      .filter(
+        r.and(
+          r.row("date").gt(r.now().date().sub(day)),
+          r.row("category").contains("政治")
+        )
+      )
       .orderBy(r.desc("share_count"))
       .limit(10)
       .run(connection);
@@ -34,19 +72,54 @@ app.get('/', (req, res) => {
        title: `${moment().format("MM/DD/YYYY")} 24 小時內熱門新聞整理`,
        shares: results,
        comments,
+       otherExcludeEntShares,
+       otherExcludeEntComments,
        moment,
      });
    })
 });
 
 app.get('/48', (req, res) => {
-  var connection, comments;
+  var connection, otherExcludeEntComments, otherExcludeEntShares, comments;
   r.connect(dbOptions)
    .then(conn => {
      connection = conn;
      return r
       .table("Graph")
-      .filter(news => news("date").gt(r.now().date().sub(2*day)))
+      .filter(
+        r.and(
+          r.row("date").gt(r.now().date().sub(2*day)),
+          r.row("category").contains("東推西推", "即時新聞", "娛樂").not()
+        )
+      )
+      .orderBy(r.desc("comment_count"))
+      .limit(10)
+      .run(connection);
+   })
+   .then(results => {
+     otherExcludeEntComments = results;
+     return r
+      .table("Graph")
+      .filter(
+        r.and(
+          r.row("date").gt(r.now().date().sub(2*day)),
+          r.row("category").contains("東推西推", "即時新聞", "娛樂").not()
+        )
+      )
+      .orderBy(r.desc("share_count"))
+      .limit(10)
+      .run(connection);
+   })
+   .then(results => {
+     otherExcludeEntShares = results;
+     return r
+      .table("Graph")
+      .filter(
+        r.and(
+          r.row("date").gt(r.now().date().sub(2*day)),
+          r.row("category").contains("政治")
+        )
+      )
       .orderBy(r.desc("comment_count"))
       .limit(10)
       .run(connection);
@@ -55,7 +128,12 @@ app.get('/48', (req, res) => {
      comments = results;
      return r
       .table("Graph")
-      .filter(news => news("date").gt(r.now().date().sub(2*day)))
+      .filter(
+        r.and(
+          r.row("date").gt(r.now().date().sub(2*day)),
+          r.row("category").contains("政治")
+        )
+      )
       .orderBy(r.desc("share_count"))
       .limit(10)
       .run(connection);

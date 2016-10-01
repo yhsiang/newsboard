@@ -26,7 +26,11 @@
     <tbody>
     <% data.forEach(function(it) { %>
       <tr>
-        <td><% it.category.join(",")%></td>
+        <td>
+          <% if (it.category) { %>
+          <% it.category.join(",")%>
+          <% } %>
+        </td>
         <td>
           <a href="<%= it.id%>" target="_blank">
             <%= it.title%>

@@ -16,6 +16,7 @@
   <table id="data">
     <thead>
       <tr>
+        <th>分類</th>
         <th>標題</th>
         <th>總互動數</th>
         <th>留言數</th>
@@ -25,6 +26,7 @@
     <tbody>
     <% data.forEach(function(it) { %>
       <tr>
+        <td><% it.category.join(",")%></td>
         <td>
           <a href="<%= it.id%>" target="_blank">
             <%= it.title%>

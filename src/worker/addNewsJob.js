@@ -10,7 +10,10 @@ r.connect(dbOptions)
    return r
     .table(tableName)
     .filter(
-      r.row.hasFields("category").not()
+      r.and(
+        r.row.hasFields("category").not(),
+        r.row("date").gt(r.now().date().sub(7*86400))
+      )
     )
     .run(conn);
  })

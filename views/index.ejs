@@ -31,30 +31,6 @@
   </div>
   <h1 class="header"><%= title %></h1>
   <div class="block">
-    <table class="pure-table pure-table-bordered shares">
-      <thead>
-        <tr>
-          <th>總互動數</th>
-          <th>標題</th>
-          <th>時間</th>
-        </tr>
-      </thead>
-      <tbody>
-      <% shares.forEach(function(share) { %>
-        <tr>
-          <td class="share"><%= share.share_count%></td>
-          <td>
-            <a href="<%= share.id%>" target="_blank">
-              <%= share.title%>
-            </a>
-          </td>
-          <td><%= moment(share.date).format("MM-DD HH:mm")%></td>
-        </tr>
-      <% }); %>
-      </tbody>
-    </table>
-  </div>
-  <div class="block">
     <table class="pure-table pure-table-bordered comments">
       <thead>
         <tr>
@@ -73,6 +49,30 @@
             </a>
           </td>
           <td><%= moment(comment.date).format("MM-DD HH:mm")%></td>
+        </tr>
+      <% }); %>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <table class="pure-table pure-table-bordered shares">
+      <thead>
+        <tr>
+          <th>總互動數</th>
+          <th>標題</th>
+          <th>時間</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% shares.forEach(function(share) { %>
+        <tr>
+          <td class="share"><%= share.share_count%></td>
+          <td>
+            <a href="<%= share.id%>" target="_blank">
+              <%= share.title%>
+            </a>
+          </td>
+          <td><%= moment(share.date).format("MM-DD HH:mm")%></td>
         </tr>
       <% }); %>
       </tbody>

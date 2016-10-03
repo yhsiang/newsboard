@@ -4,6 +4,14 @@ import Promise from "bluebird";
 import r from "rethinkdb";
 import { dbOptions, tableName } from "../config/db";
 
+function parseType(url) {
+  const [ origin, matched ] = url.match(/https?:\/\/(.*)/)
+  const [ host ] = matched.split("/")
+  const words = host.split(".")
+  if (words.length === 2) return words[0]
+  return words[1]
+}
+
 function fetch(url) {
   const req = request(url);
   const feedparser = new FeedParser();
@@ -34,6 +42,7 @@ function fetch(url) {
         id: link.replace(/\/\/$/, '/'),
         title,
         date,
+        type: parseType(link),
       });
     }
   });
@@ -79,6 +88,12 @@ const urls = [
   "http://news.ltn.com.tw/rss/northern.xml",
   "http://news.ltn.com.tw/rss/central.xml",
   "http://news.ltn.com.tw/rss/southern.xml",
+  // foreign media
+  "http://www.nytimes.com/services/xml/rss/nyt/HomePage.xml",
+  "http://feeds.washingtonpost.com/rss/politics",
+  "http://www.economist.com/sections/asia/rss.xml",
+  "http://www.economist.com/sections/united-states/rss.xml",
+  "http://feeds.bbci.co.uk/news/rss.xml",
 ];
 
 var connection;

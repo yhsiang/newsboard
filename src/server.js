@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
       .run(connection);
    })
    .then(results => {
-     otherExcludeEntComments = results;
+     otherExcludeEntComments = results.slice(0, 10);
      return r
       .table("Graph")
       .filter(
@@ -47,7 +47,7 @@ app.get('/', (req, res) => {
       .run(connection);
    })
    .then(results => {
-     otherExcludeEntShares = results;
+     otherExcludeEntShares = results.slice(0, 10);
      return r
       .table("Graph")
       .filter(
@@ -60,7 +60,7 @@ app.get('/', (req, res) => {
       .run(connection);
    })
    .then(results => {
-     comments = results;
+     comments = results.slice(0, 10);
      return r
       .table("Graph")
       .filter(
@@ -76,9 +76,9 @@ app.get('/', (req, res) => {
      res.render("index.ejs", {
        title: `${moment().format("MM/DD/YYYY")} 24 小時內熱門新聞整理`,
        shares: results.slice(0, 10),
-       comments.slice(0, 10),
-       otherExcludeEntShares.slice(0, 10),
-       otherExcludeEntComments.slice(0, 10),
+       comments,
+       otherExcludeEntShares,
+       otherExcludeEntComments,
        moment,
      });
    })
@@ -101,7 +101,7 @@ app.get('/48', (req, res) => {
       .run(connection);
    })
    .then(results => {
-     otherExcludeEntComments = results;
+     otherExcludeEntComments = results.slice(0, 10);
      return r
       .table("Graph")
       .filter(
@@ -114,7 +114,7 @@ app.get('/48', (req, res) => {
       .run(connection);
    })
    .then(results => {
-     otherExcludeEntShares = results;
+     otherExcludeEntShares = results.slice(0, 10);
      return r
       .table("Graph")
       .filter(
@@ -127,7 +127,7 @@ app.get('/48', (req, res) => {
       .run(connection);
    })
    .then(results => {
-     comments = results;
+     comments = results.slice(0, 10);
      return r
       .table("Graph")
       .filter(
@@ -143,9 +143,9 @@ app.get('/48', (req, res) => {
      res.render("index.ejs", {
        title: `${moment().format("MM/DD/YYYY")} 48 小時內熱門新聞整理`,
        shares: results.slice(0, 10),
-       comments.slice(0, 10),
-       otherExcludeEntShares.slice(0, 10),
-       otherExcludeEntComments.slice(0, 10),
+       comments,
+       otherExcludeEntShares,
+       otherExcludeEntComments,
        moment,
      });
    })

@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
           r.row("category").contains(filterOther).not()
         )
       )
-      .orderBy({ index: r.desc("comment_count") })
+      .orderBy(r.desc("comment_count"))
       .run(connection);
    })
    .then(results => {
@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
           r.row("category").contains(filterOther).not()
         )
       )
-      .orderBy({ index: r.desc("share_count") })
+      .orderBy(r.desc("share_count"))
       .run(connection);
    })
    .then(results => {
@@ -56,7 +56,7 @@ app.get('/', (req, res) => {
           r.row("category").contains("政治")
         )
       )
-      .orderBy({ index: r.desc("comment_count") })
+      .orderBy(r.desc("comment_count"))
       .run(connection);
    })
    .then(results => {
@@ -69,7 +69,7 @@ app.get('/', (req, res) => {
           r.row("category").contains("政治")
         )
       )
-      .orderBy({ index: r.desc("share_count") })
+      .orderBy(r.desc("share_count"))
       .run(connection);
    })
    .then(results => {
@@ -97,7 +97,7 @@ app.get('/48', (req, res) => {
           r.row("category").contains(filterOther).not()
         )
       )
-      .orderBy({ index: r.desc("comment_count") })
+      .orderBy(r.desc("comment_count"))
       .run(connection);
    })
    .then(results => {
@@ -110,7 +110,7 @@ app.get('/48', (req, res) => {
           r.row("category").contains(filterOther).not()
         )
       )
-      .orderBy({ index: r.desc("share_count") })
+      .orderBy(r.desc("share_count"))
       .run(connection);
    })
    .then(results => {
@@ -123,7 +123,7 @@ app.get('/48', (req, res) => {
           r.row("category").contains("政治")
         )
       )
-      .orderBy({ index: r.desc("comment_count") })
+      .orderBy(r.desc("comment_count"))
       .run(connection);
    })
    .then(results => {
@@ -136,7 +136,7 @@ app.get('/48', (req, res) => {
           r.row("category").contains("政治")
         )
       )
-      .orderBy({ index: r.desc("share_count") })
+      .orderBy(r.desc("share_count"))
       .run(connection);
    })
    .then(results => {

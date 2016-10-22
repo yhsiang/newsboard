@@ -30,8 +30,7 @@ app.get('/', (req, res) => {
           r.row("category").contains(filterOther).not()
         )
       )
-      .orderBy(r.desc("comment_count"))
-      .limit(10)
+      .orderBy({ index: r.desc("comment_count") })
       .run(connection);
    })
    .then(results => {
@@ -44,8 +43,7 @@ app.get('/', (req, res) => {
           r.row("category").contains(filterOther).not()
         )
       )
-      .orderBy(r.desc("share_count"))
-      .limit(10)
+      .orderBy({ index: r.desc("share_count") })
       .run(connection);
    })
    .then(results => {
@@ -58,8 +56,7 @@ app.get('/', (req, res) => {
           r.row("category").contains("政治")
         )
       )
-      .orderBy(r.desc("comment_count"))
-      .limit(10)
+      .orderBy({ index: r.desc("comment_count") })
       .run(connection);
    })
    .then(results => {
@@ -72,17 +69,16 @@ app.get('/', (req, res) => {
           r.row("category").contains("政治")
         )
       )
-      .orderBy(r.desc("share_count"))
-      .limit(10)
+      .orderBy({ index: r.desc("share_count") })
       .run(connection);
    })
    .then(results => {
      res.render("index.ejs", {
        title: `${moment().format("MM/DD/YYYY")} 24 小時內熱門新聞整理`,
-       shares: results,
-       comments,
-       otherExcludeEntShares,
-       otherExcludeEntComments,
+       shares: results.slice(0, 10),
+       comments.slice(0, 10),
+       otherExcludeEntShares.slice(0, 10),
+       otherExcludeEntComments.slice(0, 10),
        moment,
      });
    })
@@ -101,8 +97,7 @@ app.get('/48', (req, res) => {
           r.row("category").contains(filterOther).not()
         )
       )
-      .orderBy(r.desc("comment_count"))
-      .limit(10)
+      .orderBy({ index: r.desc("comment_count") })
       .run(connection);
    })
    .then(results => {
@@ -115,8 +110,7 @@ app.get('/48', (req, res) => {
           r.row("category").contains(filterOther).not()
         )
       )
-      .orderBy(r.desc("share_count"))
-      .limit(10)
+      .orderBy({ index: r.desc("share_count") })
       .run(connection);
    })
    .then(results => {
@@ -129,8 +123,7 @@ app.get('/48', (req, res) => {
           r.row("category").contains("政治")
         )
       )
-      .orderBy(r.desc("comment_count"))
-      .limit(10)
+      .orderBy({ index: r.desc("comment_count") })
       .run(connection);
    })
    .then(results => {
@@ -143,17 +136,16 @@ app.get('/48', (req, res) => {
           r.row("category").contains("政治")
         )
       )
-      .orderBy(r.desc("share_count"))
-      .limit(10)
+      .orderBy({ index: r.desc("share_count") })
       .run(connection);
    })
    .then(results => {
      res.render("index.ejs", {
        title: `${moment().format("MM/DD/YYYY")} 48 小時內熱門新聞整理`,
-       shares: results,
-       comments,
-       otherExcludeEntShares,
-       otherExcludeEntComments,
+       shares: results.slice(0, 10),
+       comments.slice(0, 10),
+       otherExcludeEntShares.slice(0, 10),
+       otherExcludeEntComments.slice(0, 10),
        moment,
      });
    })

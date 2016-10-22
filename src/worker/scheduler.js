@@ -11,14 +11,14 @@ r.connect(dbOptions)
    connection = conn;
    return r
     .table(tableName)
-    .orderBy(r.desc("date"))
-    .limit(30000)
+    .orderBy({index: r.desc("date") })
     .run(conn);
  })
 .then(cur => cur.toArray())
 .then(results => {
   const reduced =
     results
+      .slice(0, 3000)
       .reduce((acc, cur, idx) => {
         const index = parseInt(idx / 50, 10);
         if (!acc[index]) acc[index] = { ids: "", news: {} };
